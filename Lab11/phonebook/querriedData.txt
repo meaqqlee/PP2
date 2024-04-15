@@ -1,0 +1,13 @@
+1: Magzhan
+2: John
+3: John
+5: Alice
+6: Bob
+7: Charlie
+8: Diana
+9: Eve
+10: Alice
+11: Bob
+12: Charlie
+13: Diana
+15: Max
