@@ -1,5 +1,18 @@
 import pygame, sys, random
+'''import psycopg2'''
 from pygame.math import Vector2
+
+class WALLS:
+    def __init__(self):
+        self.walls = []
+        self.color = pygame.Color(139, 69, 19)  # Brown color for the walls
+
+    def set_walls(self, wall_data):
+        self.walls = wall_data
+
+    def draw_walls(self, screen):
+        for wall in self.walls:
+            pygame.draw.rect(screen, self.color, pygame.Rect(wall))
 
 
 class SNAKE:
@@ -121,17 +134,33 @@ class MAIN:
     def __init__(self):
         self.snake = SNAKE()
         self.fruit = FRUIT()
+        self.walls = WALLS()
+        self.level = 1
+        self.score = 0
+        self.update_level_settings()
+
+    def update_level_settings(self):
+        if self.level == 1:
+            self.walls.set_walls([])
+        elif self.level == 2:
+            self.walls.set_walls([(200, 150, 10, 100), (500, 150, 10, 100)])
+        elif self.level == 3:
+            self.walls.set_walls([(200, 150, 10, 100), (500, 150, 10, 100), (300, 300, 200, 10)])
+
+    def check_wall_collision(self):
+        head = self.snake.body[0]
+        for wall in self.walls.walls:
+            if wall[0] <= head.x * cell_size < wall[0] + wall[2] and wall[1] <= head.y * cell_size < wall[1] + wall[3]:
+                return True
+        return False
 
     def update(self):
         self.snake.move_snake()
-        self.check_collision()
+        if self.check_wall_collision():
+            self.game_over()
+        self.check_collision()  # Check for fruit collision
         self.check_fail()
-
-    def draw_elements(self):
-        self.draw_grass()
-        self.fruit.draw_fruit()
-        self.snake.draw_snake()
-        self.draw_score()
+        self.level_up()
 
     def check_collision(self):
         if self.fruit.pos == self.snake.body[0]:
@@ -152,7 +181,25 @@ class MAIN:
                 self.game_over()
 
     def game_over(self):
-        self.snake.reset()
+        print('Game over! Score:', self.score)  # Modify this as necessary for your game's design
+        pygame.quit()
+        sys.exit()
+
+    def level_up(self):
+        self.score = len(self.snake.body) - 3
+        if self.score >= 100 and self.level == 1:
+            self.level = 2
+            self.update_level_settings()
+        elif self.score >= 200 and self.level == 2:
+            self.level = 3
+            self.update_level_settings()
+
+    def draw_elements(self):
+        self.draw_grass()
+        self.fruit.draw_fruit()
+        self.snake.draw_snake()
+        self.walls.draw_walls(screen)
+        self.draw_score()
 
     def draw_grass(self):
         grass_color = (167, 209, 61)
@@ -169,19 +216,14 @@ class MAIN:
                         pygame.draw.rect(screen, grass_color, grass_rect)
 
     def draw_score(self):
-        score_text = str(len(self.snake.body) - 3)
+        score_text = 'Score: ' + str(self.score) + ' Level: ' + str(self.level)
         score_surface = game_font.render(score_text, True, (56, 74, 12))
         score_x = int(cell_size * cell_number - 60)
         score_y = int(cell_size * cell_number - 40)
         score_rect = score_surface.get_rect(center=(score_x, score_y))
-        apple_rect = apple.get_rect(midright=(score_rect.left, score_rect.centery))
-        bg_rect = pygame.Rect(apple_rect.left, apple_rect.top, apple_rect.width + score_rect.width + 6,
-                              apple_rect.height)
-
-        pygame.draw.rect(screen, (167, 209, 61), bg_rect)
         screen.blit(score_surface, score_rect)
-        screen.blit(apple, apple_rect)
-        pygame.draw.rect(screen, (56, 74, 12), bg_rect, 2)
+
+
 
 
 pygame.mixer.pre_init(44100, -16, 2, 512)

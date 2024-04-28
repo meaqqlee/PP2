@@ -16,7 +16,7 @@ pygame.display.set_caption("racer")
 
 # Classes
 class Player:
-    def __init__(self, x, y):  # Corrected '__init__'
+    def __init__(self, x, y):
         self.x = x
         self.y = y
         self.speed = 2
