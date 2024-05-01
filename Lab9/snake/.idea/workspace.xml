@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba1cd9ce-f88b-492b-91aa-b3a4581adf56" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../racing/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../racing/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../racing/racing.py" beforeDir="false" afterPath="$PROJECT_DIR$/../racing/racing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Lab10/snake/snake.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../Lab10/snake/snake.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/snake.py" beforeDir="false" afterPath="$PROJECT_DIR$/snake.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,17 +32,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.racing.executor": "Run",
-    "Python.snake.executor": "Run",
-    "Python.testing.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "adding3",
-    "last_opened_file_path": "C:/Users/Admin/PP2/Lab9"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.racing.executor&quot;: &quot;Run&quot;,
+    &quot;Python.snake.executor&quot;: &quot;Run&quot;,
+    &quot;Python.testing.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Admin/PP2/Lab9&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Admin\PP2\Lab9\paint" />

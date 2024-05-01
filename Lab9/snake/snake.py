@@ -1,11 +1,11 @@
 import pygame, sys, random
+'''import psycopg2'''
 from pygame.math import Vector2
-
 
 class SNAKE:
     def __init__(self):
         self.body = [Vector2(5, 10), Vector2(4, 10), Vector2(3, 10)]
-        self.direction = Vector2(0, 0)
+        self.direction = Vector2(1, 0)
         self.new_block = False
 
         self.head_up = pygame.image.load('Graphics/head_up.png').convert_alpha()
@@ -100,7 +100,6 @@ class SNAKE:
         self.body = [Vector2(5, 10), Vector2(4, 10), Vector2(3, 10)]
         self.direction = Vector2(0, 0)
 
-
 class FRUIT:
     def __init__(self):
         self.randomize()
@@ -116,22 +115,17 @@ class FRUIT:
         self.y = random.randint(0, cell_number - 1)
         self.pos = Vector2(self.x, self.y)
 
-
 class MAIN:
     def __init__(self):
         self.snake = SNAKE()
         self.fruit = FRUIT()
+        self.level = 1
+        self.score = 0
 
     def update(self):
         self.snake.move_snake()
-        self.check_collision()
+        self.check_collision()  # Check for fruit collision
         self.check_fail()
-
-    def draw_elements(self):
-        self.draw_grass()
-        self.fruit.draw_fruit()
-        self.snake.draw_snake()
-        self.draw_score()
 
     def check_collision(self):
         if self.fruit.pos == self.snake.body[0]:
@@ -145,14 +139,24 @@ class MAIN:
 
     def check_fail(self):
         if not 0 <= self.snake.body[0].x < cell_number or not 0 <= self.snake.body[0].y < cell_number:
+            print(f"Out of bounds: {self.snake.body[0]}")
             self.game_over()
 
         for block in self.snake.body[1:]:
             if block == self.snake.body[0]:
+                print(f"Collision with itself at: {block}")
                 self.game_over()
 
     def game_over(self):
-        self.snake.reset()
+        print(f"Game over! Score: {self.score}")
+        pygame.quit()
+        sys.exit()
+
+    def draw_elements(self):
+        self.draw_grass()
+        self.fruit.draw_fruit()
+        self.snake.draw_snake()
+        self.draw_score()
 
     def draw_grass(self):
         grass_color = (167, 209, 61)
@@ -169,28 +173,21 @@ class MAIN:
                         pygame.draw.rect(screen, grass_color, grass_rect)
 
     def draw_score(self):
-        score_text = str(len(self.snake.body) - 3)
+        score_text = 'Score: ' + str(self.score) + ' Level: ' + str(self.level)
         score_surface = game_font.render(score_text, True, (56, 74, 12))
         score_x = int(cell_size * cell_number - 60)
         score_y = int(cell_size * cell_number - 40)
         score_rect = score_surface.get_rect(center=(score_x, score_y))
-        apple_rect = apple.get_rect(midright=(score_rect.left, score_rect.centery))
-        bg_rect = pygame.Rect(apple_rect.left, apple_rect.top, apple_rect.width + score_rect.width + 6,
-                              apple_rect.height)
-
-        pygame.draw.rect(screen, (167, 209, 61), bg_rect)
         screen.blit(score_surface, score_rect)
-        screen.blit(apple, apple_rect)
-        pygame.draw.rect(screen, (56, 74, 12), bg_rect, 2)
 
-
-pygame.mixer.pre_init(44100, -16, 2, 512)
 pygame.init()
 cell_size = 40
 cell_number = 20
 screen = pygame.display.set_mode((cell_number * cell_size, cell_number * cell_size))
 clock = pygame.time.Clock()
 apple = pygame.image.load('Graphics/apple.png').convert_alpha()
+wall = pygame.image.load('Graphics/wall.png').convert_alpha()
+wall = pygame.transform.scale(wall, (40, 40))
 game_font = pygame.font.Font('Font/PoetsenOne-Regular.ttf', 25)
 
 SCREEN_UPDATE = pygame.USEREVENT
